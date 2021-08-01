@@ -92,7 +92,6 @@ public class BaseTest {
         startAppiumServer("4733");
 
         DriverFactory.setTLDriver(udidAndroid,platformAndroid,systemPort,wdaLocalPort,deviceName);
-        ActionHelper.switchContext("WEBVIEW");
     }
 
 

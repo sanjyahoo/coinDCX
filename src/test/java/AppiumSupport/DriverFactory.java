@@ -41,6 +41,7 @@ public class DriverFactory {
         capabilities.setCapability(AndroidMobileCapabilityType.SYSTEM_PORT,systemPort);
         capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,"com.coindcx.security.ScreenLock");
         capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,"com.coindcx");
+        capabilities.setCapability("chromeDriverExecutable","/Users/sanjaysharma/Documents/workspace/coinDCX/DriverFolder/chromedriver");
         driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4733/wd/hub"),capabilities);
         System.out.println("Up and Running");
 

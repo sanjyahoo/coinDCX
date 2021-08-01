@@ -11,6 +11,7 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+import javafx.scene.web.WebView;
 import net.bytebuddy.utility.RandomString;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
@@ -1209,6 +1210,7 @@ public class ActionHelper extends DriverFactory {
 
     public static void switchContext(String context)
     {
+        
         System.out.println("Before Switching : "+DriverFactory.getTLDriver().getContext());
         Set<String> con = DriverFactory.getTLDriver().getContextHandles();
         for(String c : con)
