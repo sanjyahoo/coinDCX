@@ -27,6 +27,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -1204,5 +1205,21 @@ public class ActionHelper extends DriverFactory {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static void switchContext(String context)
+    {
+        System.out.println("Before Switching : "+DriverFactory.getTLDriver().getContext());
+        Set<String> con = DriverFactory.getTLDriver().getContextHandles();
+        for(String c : con)
+        {
+            System.out.println("Available Context : "+c);
+            if(c.contains(context))
+            {
+                DriverFactory.getTLDriver().context(c);
+                break;
+            }
+        }
+        System.out.println("After Switching : "+DriverFactory.getTLDriver().getContext());
     }
 }

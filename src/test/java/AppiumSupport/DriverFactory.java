@@ -39,7 +39,9 @@ public class DriverFactory {
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,platformInfoAndroid[1]);
         capabilities.setCapability(MobileCapabilityType.UDID,udidAndroid);
         capabilities.setCapability(AndroidMobileCapabilityType.SYSTEM_PORT,systemPort);
-        driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723"),capabilities);
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,"com.coindcx.security.ScreenLock");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,"com.coindcx");
+        driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4733/wd/hub"),capabilities);
         System.out.println("Up and Running");
 
         tldriver.set(driver);

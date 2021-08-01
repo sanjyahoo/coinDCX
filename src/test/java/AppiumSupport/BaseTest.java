@@ -1,5 +1,8 @@
 package AppiumSupport;
 
+import PageObjects.HomePage;
+import PageObjects.LaunchPage;
+import Utils.ActionHelper;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
@@ -32,10 +35,13 @@ public class BaseTest {
     static DateFormat dformat = new SimpleDateFormat("dd_MM_yyyy_HH-mm-ss");
     static String reportDate = dformat.format(System.currentTimeMillis());
 
+    private static final ThreadLocal<LaunchPage> launchPage = new ThreadLocal<>();
+    private static final ThreadLocal<HomePage> homePage = new ThreadLocal<>();
 
     @Parameters(value = {"udidAndroid","platformAndroid","systemPort","wdaLocalPort","deviceName"})
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void setup(@Optional("udidAndroid")String udidAndroid, @Optional("platformAndroid")String platformAndroid, @Optional("systemPort")String systemPort, @Optional("wdaLocalPort")String wdaLocalPort, @Optional("deviceName")String deviceName) throws Exception {
+
         File classPathRoot = new File(System.getProperty("user.dir"));
         File outputDir = new File(classPathRoot,"/output");
         File extentPath = new File(outputDir,"extentTestReport.html");
@@ -50,6 +56,7 @@ public class BaseTest {
         } catch (Exception ex){}
 
         htmlReporter = new ExtentHtmlReporter(extentPath.getAbsolutePath());
+        extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
 
         htmlReporter.config().setChartVisibilityOnOpen(true);
@@ -59,8 +66,22 @@ public class BaseTest {
         htmlReporter.config().setTheme(Theme.DARK);
         htmlReporter.config().setTimeStampFormat("EEE, MMM dd, yyyy, hh:mm a '('zzz')'");
 
+        extent.setSystemInfo("Device",deviceName);
+        extent.setSystemInfo("OS Version",platformAndroid);
 
+        LaunchPage instanceLaunchPage = new LaunchPage(DriverFactory.getTLDriver());
+        HomePage instanceHomePage = new HomePage();
 
+        launchPage.set(instanceLaunchPage);
+        homePage.set(instanceHomePage);
+    }
+
+    protected static LaunchPage launchPageInstance(){
+        return launchPage.get();
+    }
+
+    protected static HomePage homePageInstance(){
+        return homePage.get();
     }
 
     @Parameters(value = {"udidAndroid","platformAndroid","systemPort","wdaLocalPort","deviceName"})
@@ -69,7 +90,12 @@ public class BaseTest {
         stopAppiumServer("4733");
         stopAppiumServer(wdaLocalPort);
         startAppiumServer("4733");
+
+        DriverFactory.setTLDriver(udidAndroid,platformAndroid,systemPort,wdaLocalPort,deviceName);
+        ActionHelper.switchContext("WEBVIEW");
     }
+
+
 
     void startAppiumServer(String p){
         CommandLine command = new CommandLine("/usr/local/bin/node");

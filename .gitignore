@@ -1,1 +1,4 @@
 .idea
+output
+target
+.DS_store

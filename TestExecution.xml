@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Sanity Suite - Android Member App" verbose="1" parallel="false" thread-count="1">
+    <parameter name="executionPlatform" value="ANDROID"></parameter>
+    <parameter name="udidAndroid" value="emulator-5554"/>
+    <parameter name="platformAndroid" value="Android 10"/>
+    <parameter name="deviceName" value="Google Pixel 4 XL"/>
+    <parameter name="systemPort" value="8200"/>
+<!--    <parameter name="executionEngine" value="${executionEngine}"></parameter>-->
+<!--    <parameter name="executionServer" value="${executionServer}"></parameter>-->
+<!--    <parameter name="useUploadedApp" value="${useUploadedApp}"></parameter>-->
+    <!--	<parameter name="executionEngine" value="LOCAL"></parameter>-->
+    <!--	<parameter name="executionServer" value="QA"></parameter>-->
+    <!--	<parameter name="useUploadedApp" value="true"></parameter>-->
+
+
+    <test name="Signup Sanity Test" preserve-order="true">
+        <groups>
+            <run>
+                <include name = "Sanity" />
+            </run>
+        </groups>
+        <classes>
+            <class name="Test.Execute_SignUp" />
+        </classes>
+    </test>
+</suite>
